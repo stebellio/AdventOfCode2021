@@ -9,9 +9,7 @@ export class PuzzleInput {
 
         let filename: string = 'input';
 
-        if (number) {
-            filename += number;
-        }
+        number && (filename += number);
 
         this._input = fs.readFileSync(filename + '.txt', 'utf8');
         this._rows = this._input.split('\n');
@@ -32,4 +30,8 @@ export function solution1(solution: any) {
 
 export function solution2(solution: any) {
     console.log('Second solution: ' + solution);
+}
+
+export function bin2int(bin: string): number {
+    return parseInt(bin, 2);
 }
