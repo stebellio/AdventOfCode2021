@@ -35,3 +35,7 @@ export function solution2(solution: any) {
 export function bin2int(bin: string): number {
     return parseInt(bin, 2);
 }
+
+export function createSquareGrid(dimension: number, fill: any) {
+    return Array(dimension).fill(fill).map(()=>Array(dimension).fill(fill))
+}
