@@ -39,3 +39,9 @@ export function bin2int(bin: string): number {
 export function createSquareGrid(dimension: number, fill: any) {
     return Array(dimension).fill(fill).map(()=>Array(dimension).fill(fill))
 }
+
+export function transposeMatrix(data: any[]) {
+    return Object.keys(data[0]).map(function(c) {
+        return data.map(function(r) { return r[c]; });
+    });
+}
