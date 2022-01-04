@@ -1,13 +1,21 @@
-import {PuzzleInput, solution1} from "../commons";
+import {PuzzleInput, solution1, solution2} from "../commons";
 
 const puzzleInput = new PuzzleInput();
 
-const points = {
+type Points = {
+    ")": number,
+    "]": number,
+    "}": number,
+    ">": number
+}
+
+let points: Points = {
     ")": 3,
     "]": 57,
     "}": 1197,
     ">": 25137
 }
+
 type Delimiter = {
     start: string,
     end: string
@@ -92,5 +100,67 @@ chunks.forEach((chunk: string[]) => {
     }
 });
 solution1(getPoints(corrupted_symbols));
+
+// Part2
+const invalidChunkCompletion: string[][] = [];
+const multiplier: number = 5;
+points = {
+    ")": 1,
+    "]": 2,
+    "}": 3,
+    ">": 4
+}
+
+chunks.forEach((chunk: string[]) => {
+    if (isCorrupted(chunk)) {
+        return;
+    }
+
+    let end_symbols: string[] = [];
+
+    chunk.forEach((symbol: string) => {
+
+        switch (symbol) {
+            case ROUND.start:
+                end_symbols.push(ROUND.end);
+                break;
+            case SQUARE.start:
+                end_symbols.push(SQUARE.end);
+                break;
+            case BRACE.start:
+                end_symbols.push(BRACE.end);
+                break;
+            case ARROW.start:
+                end_symbols.push(ARROW.end);
+                break;
+            default:
+                end_symbols.pop();
+                break;
+        }
+    });
+
+    invalidChunkCompletion.push(end_symbols.reverse());
+});
+
+let scores: number[] = [];
+invalidChunkCompletion.forEach((symbols: string[]) => {
+    let totalScore: number = 0;
+
+    symbols.forEach((symbol: string) => {
+        totalScore *= multiplier;
+        totalScore += points[symbol];
+    })
+
+    scores.push(totalScore);
+})
+
+// scores.push(corrupted_score);
+
+scores.sort((first: number, second: number) => {
+    return first - second;
+});
+
+const winner_index = (scores.length / 2) - 0.5;
+solution2(scores[winner_index]);
 
 
