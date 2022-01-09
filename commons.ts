@@ -45,3 +45,20 @@ export function transposeMatrix(data: any[]) {
         return data.map(function(r) { return r[c]; });
     });
 }
+
+export const getIndicesOf = (searchStr: string, str: string, caseSensitive: boolean = false) => {
+    let searchStrLen = searchStr.length;
+    if (searchStrLen == 0) {
+        return [];
+    }
+    let startIndex = 0, index, indices = [];
+    if (!caseSensitive) {
+        str = str.toLowerCase();
+        searchStr = searchStr.toLowerCase();
+    }
+    while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+        indices.push(index);
+        startIndex = index + searchStrLen;
+    }
+    return indices;
+}
